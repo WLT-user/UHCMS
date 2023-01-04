@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts> 
+	<constant name= "struts.enable.DynamicMethodInvocation"  value= "true" />
+	<package name="strutsBeanUser" extends="struts-default" namespace="/user">
+		<!-- 通过配置method实现调用 -->
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		
+		<action name="login" class="cn.edu.zjut.uhcms.controller.UserAction" method="login">
+			<result name="success" type="redirect">/background_system.jsp</result>
+			<result name="fail" type="redirect">/login.jsp</result>
+		</action>
+		
+		<action name="modifyPass" class="cn.edu.zjut.uhcms.controller.UserAction" method="modifyPass">
+			<result name="success" type="stream">
+				<!--指定stream流生成响应的数据类型-->
+                <param name="contentType">text/html</param>
+                <!--指定action中由哪个方法去输出InputStream类型的变量-->
+                <param name="inputName">inputStream</param>
+			</result>
+			<result name="error" type="redirect">/background_system.jsp</result>
+		</action>	
+	</package>
+	
+	<package name="strutsBeanMajor" extends="struts-default, json-default" namespace="/major">
+		<!-- 通过配置method实现调用 -->
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		
+		<action name="add" class="cn.edu.zjut.uhcms.controller.MajorAction" method="add">
+			<result name="success" type="stream">
+				<!--指定stream流生成响应的数据类型-->
+                <param name="contentType">text/html</param>
+                <!--指定action中由哪个方法去输出InputStream类型的变量-->
+                <param name="inputName">inputStream</param>
+			</result>
+			<result name="error" type="redirect">/background_system.jsp</result>
+		</action>
+		
+		<action name="queryMajorInfo" class="cn.edu.zjut.uhcms.controller.MajorAction" method="queryMajorInfo">
+			 <result name="success" type="json">
+  			 <param name="root">jsonData</param>
+  			 </result>
+			<result name="fail" type="redirect">/background_system.jsp</result>
+			<result name="error" type="redirect">/login.jsp</result>
+		</action>
+	</package>
+	
+	<package name="strutsBeanTeacher" extends="struts-default, json-default" namespace="/teacher">
+		<!-- 通过配置method实现调用 -->
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		
+		<action name="add" class="cn.edu.zjut.uhcms.controller.TeacherAction" method="add">
+			<result name="success" type="redirect">/background_system.jsp</result>
+			<result name="fail" type="redirect">/login.jsp</result>
+		</action>		
+		<action name="queryTeacherInfo" class="cn.edu.zjut.uhcms.controller.TeacherAction" method="queryTeacherInfo">
+			 <result name="success" type="json">
+  			 <param name="root">jsonData</param>
+  			 </result>
+			<result name="fail" type="redirect">/background_system.jsp</result>
+			<result name="error" type="redirect">/login.jsp</result>
+		</action>
+	</package>
+	 
+	<package name="strutsBeanCollege" extends="struts-default, json-default" namespace="/college">
+		<!-- 通过配置method实现调用 -->
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		
+		<action name="add" class="cn.edu.zjut.uhcms.controller.CollegeAction" method="add">
+			<result name="success" type="stream">
+				<!--指定stream流生成响应的数据类型-->
+                <param name="contentType">text/html</param>
+                <!--指定action中由哪个方法去输出InputStream类型的变量-->
+                <param name="inputName">inputStream</param>
+			</result>
+			<result name="error" type="redirect">/background_system.jsp</result>
+		</action>
+		
+		<action name="queryCollegeInfo" class="cn.edu.zjut.uhcms.controller.CollegeAction" method="queryCollegeInfo">
+			 <result name="success" type="json">
+  			 <param name="root">jsonData</param>
+  			 </result>
+			<result name="fail" type="redirect">/background_system.jsp</result>
+			<result name="error" type="redirect">/login.jsp</result>
+		</action>
+	</package>
+	 
+	<package name="strutsBeanStudent" extends="struts-default, json-default" namespace="/student">
+		<!-- 通过配置method实现调用 -->
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		
+		<action name="add" class="cn.edu.zjut.uhcms.controller.StudentAction" method="add">
+			<result name="success" type="stream">
+				<!--指定stream流生成响应的数据类型-->
+                <param name="contentType">text/html</param>
+                <!--指定action中由哪个方法去输出InputStream类型的变量-->
+                <param name="inputName">inputStream</param>
+			</result>
+			<result name="error" type="redirect">/background_system.jsp</result>
+		</action>
+		
+		<action name="queryStudentInfo" class="cn.edu.zjut.uhcms.controller.StudentAction" method="queryStudentInfo">
+			 <result name="success" type="json">
+  			 <param name="root">jsonData</param>
+  			 </result>
+			<result name="fail" type="redirect">/background_system.jsp</result>
+			<result name="error" type="redirect">/login.jsp</result>
+		</action>
+	</package>
+	 
+	<package name="strutsBeanRecord" extends="struts-default, json-default" namespace="/record">
+		<!-- 通过配置method实现调用 -->
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="queryTeacherRecordInfo" class="cn.edu.zjut.uhcms.controller.RecordAction" method="queryTeacherRecordInfo">
+			 <result name="success" type="json">
+  			 <param name="root">jsonData</param>
+  			 </result>
+			<result name="fail" type="redirect">/background_system.jsp</result>
+			<result name="error" type="redirect">/login.jsp</result>
+		</action>
+		<action name="queryStudentRecordInfo" class="cn.edu.zjut.uhcms.controller.RecordAction" method="queryStudentRecordInfo">
+			 <result name="success" type="json">
+  			 <param name="root">jsonData</param>
+  			 </result>
+			<result name="fail" type="redirect">/background_system.jsp</result>
+			<result name="error" type="redirect">/login.jsp</result>
+		</action>
+		<action name="punch" class="cn.edu.zjut.uhcms.controller.RecordAction" method="punch">
+			<result name="success" type="stream">
+				<!--指定stream流生成响应的数据类型-->
+                <param name="contentType">text/html</param>
+                <!--指定action中由哪个方法去输出InputStream类型的变量-->
+                <param name="inputName">inputStream</param>
+			</result>
+			<result name="error" type="redirect">/background_system.jsp</result>
+		</action>
+	</package> 
+</struts>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html  style="min-width:900px;">
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="./layui-master/dist/css/layui.css" media="all">
+		<script src="./layui-master/dist/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./jquery/jquery-3.6.0.min.js" type="text/javascript"></script>
+	<title>学生打卡信息查询</title>
+	</head>
+	<body>
+		<table class="layui-hide" id="test" lay-filter="test" ></table>
+		
+		<script type="text/html" id="toolbarDemo" >
+		  <div>
+			<label style="display: inline-block; width: 160px;"><h3 style="color: gray;">学生打卡信息查询</h3></label> 
+		    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+		    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+		    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+			<button class="layui-btn layui-btn-sm" id="searchBtn" style="float:right;">查询</button>
+			<input type="text" id="searchTxt" style="width:200px;float:right;height:30px;" placeholder="请输入查询信息"  class="layui-input">
+		  </div>
+		</script>
+		
+		<script src="./layui-master/dist/layui.js" charset="utf-8"></script>
+		<script>
+		layui.use('table', function(){
+		  var table = layui.table;
+		  var $ = layui.jquery;
+		  
+		  table.render({
+		    elem: '#test'
+			,url:''
+		    ,data:[]
+		    ,toolbar: '#toolbarDemo'
+		    ,title: '用户数据表'
+			,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+		    ,cols: [[
+		       {type: 'checkbox', fixed: 'left'}
+		      ,{field:'rno', title:'编号', fixed: 'left', unresize: true, sort: true}
+		      ,{field:'sno', title:'学号', templet:function(res) {
+		    	  return res.student.sno;
+		      }}
+		      ,{field:'sname', title:'姓名', templet:function(res) {
+		    	  return res.student.name;
+		      }}
+		      ,{field:'ssex', title:'性别', templet:function(res) {
+		    	  return res.student.sex;
+		      }}
+		      ,{field:'sid', title:'身份证号', templet:function(res) {
+		    	  return res.student.id;
+		      }}
+			  ,{field:'scollege', title:'学院', templet:function(res) {
+		    	  return res.student.college;
+		      }}
+			  ,{field:'smajor', title:'专业', templet:function(res) {
+		    	  return res.student.major;
+		      }}
+			  ,{field:'judgement', title:'级别', sort: true}
+		      ,{field:'rdate', title:'打卡日期', sort: true}
+			  ,{field:'rtime', title:'打卡时间', sort: true}
+			  ,{fixed: 'right',field:'current_state', title:'健康码状态', sort: true}
+		    ]]
+		    ,page: false,
+		  });
+		  
+		  //工具栏事件
+		  table.on('toolbar(test)', function(obj){
+		    var checkStatus = table.checkStatus(obj.config.id);
+		    switch(obj.event){
+		      case 'getCheckData':
+		        var data = checkStatus.data;
+		        layer.alert(JSON.stringify(data));
+		      break;
+		      case 'getCheckLength':
+		        var data = checkStatus.data;
+		        layer.msg('选中了：'+ data.length + ' 个');
+		      break;
+		      case 'isAll':
+		        layer.msg(checkStatus.isAll ? '全选': '未全选')
+		      break;
+		    };
+		  });
+		  
+		  //监听单元格编辑事件
+		  table.on('edit(test)',function(obj){
+			var data = obj.data;
+			var value = obj.value;
+			var field = obj.field;
+			layer.msg("修改了学号为"+data.tno+"的"+field+"字段的值为:"+value);
+		  });		  
+		  
+		  $(document).on('click','#searchBtn',function(data){
+			  
+			  var searchTxt = $("#searchTxt");
+			  table.reload('test',{
+				  url:'record/queryStudentRecordInfo',
+				 where:{
+					 name:searchTxt.val(),
+				 },
+			 });
+		  });
+		  
+		});  
+		</script>
+	</body>
+</html>
